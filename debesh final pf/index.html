@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AthexDev</title>
+    <meta name="description" content="AthexDev's Portfolio, a Creative Developer and UI/UX Designer based in India specializing in interactive web experiences.">
+    <meta name="keywords" content="Creative Developer, UI/UX Designer, Frontend Developer, React, Tailwind CSS, Indonesia, Portfolio">
+    <meta name="author" content="AthexDev">
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                fontFamily: {
+                    sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    display: ['"Space Grotesk"', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#4f46e5',
+                        dark: '#050505',
+                        surface: '#0a0a0a',
+                        whatsapp: '#25D366',
+                    },
+                    animation: {
+                        'fade-up': 'fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                        'marquee': 'marquee 30s linear infinite',
+                        'spin-slow': 'spin 15s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'text-reveal': 'textReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)', filter: 'blur(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)', filter: 'blur(0)' },
+                        },
+                        textReveal: {
+                            '0%': { transform: 'translateY(100%)' },
+                            '100%': { transform: 'translateY(0)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- External Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-dark dark:text-slate-200 transition-colors duration-500 selection:bg-primary selection:text-white overflow-x-hidden">
+
+    <!-- [NEW] Noise Texture Overlay -->
+    <div class="fixed inset-0 z-[1] bg-noise pointer-events-none opacity-40 mix-blend-overlay"></div>
+
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 z-[9999] bg-slate-50 dark:bg-dark flex items-center justify-center">
+        <div class="flex flex-col items-center gap-4">
+            <div class="relative w-16 h-16">
+                <div class="absolute inset-0 border-4 border-slate-200 dark:border-white/10 rounded-full"></div>
+                <div class="absolute inset-0 border-4 border-primary rounded-full border-t-transparent animate-spin"></div>
+            </div>
+            <span class="text-sm font-bold tracking-widest uppercase animate-pulse">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Background Elements -->
+    <div class="fixed inset-0 z-0 bg-grid-pattern pointer-events-none"></div>
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/20 rounded-full blur-[120px] pointer-events-none opacity-50 dark:opacity-20 z-0"></div>
+
+    <!-- Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6">
+        <nav class="bg-white/70 dark:bg-surface/70 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-full px-6 py-3 flex items-center gap-8 shadow-sm transition-all duration-300 w-full max-w-4xl justify-between md:justify-start reveal-on-scroll">
+            
+            <a href="#" class="text-xl font-bold font-display tracking-tight text-slate-900 dark:text-white hoverable magnetic-btn focus:outline-none relative z-20">
+                AthexDev<span class="text-primary">.</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium ml-auto relative z-20" id="desktop-menu">
+                <a href="#home" class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Home</a>
+                <a href="#about" class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">About</a>
+                <a href="#work" class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Project</a>
+                <a href="#resume" class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">CV</a>
+                <a href="#github" class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">GitHub</a>
+                <a href="#writing" class="nav-link text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors hoverable magnetic-btn">Writing</a>
+                <a href="#contact" class="px-5 py-2 bg-slate-900 dark:bg-white text-white dark:text-black rounded-full font-bold text-xs hover:scale-105 transition-transform hoverable magnetic-btn">Hire Me</a>
+            </div>
+
+            <div class="flex items-center gap-3 md:ml-4 border-l border-slate-200 dark:border-white/10 pl-4 md:pl-6 relative z-20">
+                <button id="theme-toggle" aria-label="Toggle Dark Mode" class="w-8 h-8 rounded-full flex items-center justify-center text-slate-500 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors hoverable magnetic-btn focus:outline-none">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="mobile-menu-btn" aria-label="Open Menu" class="md:hidden text-slate-900 dark:text-white p-1 hoverable magnetic-btn focus:outline-none">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-all duration-300">
+        <a href="#home" class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">Home</a>
+        <a href="#about" class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">About</a>
+        <a href="#work" class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">Project</a>
+        <a href="#resume" class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">Resume</a>
+        <a href="#github" class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">GitHub</a>
+        <a href="#writing" class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">Writing</a>
+        <a href="#contact" class="text-3xl font-display font-bold mobile-link hover:text-primary hoverable">Contact</a>
+        <button id="close-menu" aria-label="Close Menu" class="absolute top-8 right-8 text-slate-500 hover:text-black dark:hover:text-white hoverable">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="section-spy relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10 max-w-6xl">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left order-2 lg:order-1">
+                    <div class="hero-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/60 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-sm mb-6">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        </span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Available for 2026</span>
+                    </div>
+
+                    <!-- Masked Text Reveal Animation -->
+<h1 class="font-display text-5xl md:text-7xl lg:text-[6rem] font-bold leading-[1.1] md:leading-[0.9] tracking-tight mb-6 text-slate-900 dark:text-white">
+    <!-- Line 1: Normal appear with masking -->
+    <div class="hero-heading-line overflow-hidden">
+        <span class="block">Hello, I'm</span>
+    </div>
+    
+    <!-- Line 2: Moving Gradient Effect + Masking -->
+    <div class="hero-heading-line overflow-hidden pb-2">
+        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-secondary animate-gradient-x bg-[length:200%_auto]">Debesh Nayak</span>
+    </div>
+    
+    <!-- Line 3: Normal appear with masking -->
+    <div class="hero-heading-line overflow-hidden">
+        <span class="block"></span>
+    </div>
+</h1>
+
+                    <p class="hero-description text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-md mx-auto lg:mx-0 mb-10 leading-relaxed min-h-[3rem] md:min-h-[4rem]">
+                        I'm a <span id="typed-text" class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-500 to-secondary animate-gradient-x bg-[length:200%_auto] font-bold"></span><span class="animate-pulse text-primary font-bold ml-[2px] align-middle translate-y-[-1px] inline-block">|</span>
+                    </p>
+
+                    <div class="hero-buttons flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
+                        <a href="#work" class="group relative px-8 py-3.5 bg-slate-900 dark:bg-white text-white dark:text-black rounded-full font-bold overflow-hidden hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10 hoverable magnetic-btn focus:outline-none w-full sm:w-auto text-center">
+                            <span class="relative z-10">See My Work</span>
+                            <div class="absolute inset-0 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                        </a>
+                        <a href="#resume" class="group btn-cv-glow relative px-8 py-3.5 bg-transparent border-2 border-primary/30 hover:border-primary text-slate-900 dark:text-white rounded-full font-bold transition-all hover:shadow-[0_0_20px_rgba(37,99,235,0.3)] hoverable magnetic-btn focus:outline-none w-full sm:w-auto text-center flex items-center justify-center gap-3 overflow-hidden">
+                           <i class="far fa-file-alt text-primary group-hover:scale-110 transition-transform"></i>
+                           <span>View CV</span>
+                           <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        </a>
+                        <a href="#contact" class="hidden md:flex items-center justify-center w-12 h-12 rounded-full border border-slate-200 dark:border-white/20 hover:border-primary hover:text-primary transition-colors hoverable magnetic-btn focus:outline-none" aria-label="Scroll to Contact">
+                            <i class="fas fa-arrow-down animate-bounce"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-image-container relative h-[400px] md:h-[600px] flex items-center justify-center order-1 lg:order-2 perspective-1000">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-full blur-3xl animate-pulse-slow"></div>
+                    <div class="hero-circle-outer absolute w-64 h-64 md:w-96 md:h-96 border border-slate-200 dark:border-white/10 rounded-full animate-spin-slow"></div>
+                    <div class="hero-circle-middle absolute w-48 h-48 md:w-72 md:h-72 border border-dashed border-slate-300 dark:border-white/20 rounded-full animate-spin-slow [animation-direction:reverse]"></div>
+                    
+                    <div class="hero-profile-img hero-image-glow relative w-56 h-56 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-white dark:border-white/10 shadow-2xl animate-[float_6s_ease-in-out_infinite] z-10 group cursor-pointer hoverable magnetic-btn">
+                        <img src="images/photo4.jpeg" 
+                             alt="athexDev" 
+                             width="800" height="800"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="about" class="section-spy py-20 bg-white/50 dark:bg-white/5 border-y border-slate-200 dark:border-white/5 backdrop-blur-sm relative z-10">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="font-display text-4xl font-bold text-slate-900 dark:text-white mb-12 reveal-on-scroll">My Arsenal <span class="text-primary">.</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-auto md:h-[500px]">
+                
+                <!-- Card 1 -->
+                <div class="bento-card spotlight-card col-span-1 md:col-span-2 bg-slate-100 dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group hoverable reveal-on-scroll">
+                    <div class="spotlight-overlay"></div>
+                    <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+                    <div class="z-10">
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Main Technologies</h3>
+                        <p class="text-slate-500 text-sm">Tools I use to create digital products.</p>
+                    </div>
+                    <div class="absolute bottom-6 left-0 right-0 w-full overflow-hidden mask-edges pointer-events-auto">
+                        <div class="flex gap-8 sm:gap-12 w-max animate-marquee pb-4 pt-2 hover:[animation-play-state:paused]">
+                            <!-- Wrapper 1: First 50% -->
+                            <div class="flex gap-8 sm:gap-12 items-center px-4">
+                                <!-- Git -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(240,80,50,0.3)] group-hover/icon:border-[#F05032]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#F05032]/0 to-[#F05032]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#F05032] transition-colors">Git</span>
+                                </div>
+                                <!-- Docker -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(36,150,237,0.3)] group-hover/icon:border-[#2496ED]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#2496ED]/0 to-[#2496ED]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#2496ED] transition-colors">Docker</span>
+                                </div>
+                                <!-- PostgreSQL -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(51,103,145,0.3)] group-hover/icon:border-[#336791]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#336791]/0 to-[#336791]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#336791] transition-colors">PostgreSQL</span>
+                                </div>
+                                <!-- Django -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(9,46,32,0.3)] dark:group-hover/icon:shadow-[0_0_20px_rgba(68,183,139,0.3)] group-hover/icon:border-[#092e20]/50 dark:group-hover/icon:border-[#44b78b]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#092e20]/0 to-[#092e20]/10 dark:from-[#44b78b]/0 dark:to-[#44b78b]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" alt="Django" class="w-8 h-8 dark:hidden group-hover/icon:animate-pulse">
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" alt="Django" class="w-8 h-8 hidden dark:block invert brightness-0 opacity-80 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#092e20] dark:group-hover/icon:text-[#44b78b] transition-colors">Django</span>
+                                </div>
+                                <!-- React -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(97,218,251,0.3)] group-hover/icon:border-[#61DAFB]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#61DAFB]/0 to-[#61DAFB]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#61DAFB] transition-colors">React</span>
+                                </div>
+                                <!-- HTML -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(227,79,38,0.3)] group-hover/icon:border-[#E34F26]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#E34F26]/0 to-[#E34F26]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#E34F26] transition-colors">HTML</span>
+                                </div>
+                                <!-- CSS -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(21,114,182,0.3)] group-hover/icon:border-[#1572B6]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#1572B6]/0 to-[#1572B6]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#1572B6] transition-colors">CSS</span>
+                                </div>
+                                <!-- JavaScript -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(247,223,30,0.3)] group-hover/icon:border-[#F7DF1E]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#F7DF1E]/0 to-[#F7DF1E]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#F7DF1E] transition-colors">JavaScript</span>
+                                </div>
+                                <!-- Python -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(55,118,171,0.3)] group-hover/icon:border-[#3776AB]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#3776AB]/0 to-[#3776AB]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#3776AB] transition-colors">Python</span>
+                                </div>
+                                <!-- MySQL -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(68,121,161,0.3)] group-hover/icon:border-[#4479A1]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#4479A1]/0 to-[#4479A1]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#4479A1] transition-colors">MySQL</span>
+                                </div>
+                                <!-- Kubernetes -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(50,108,229,0.3)] group-hover/icon:border-[#326CE5]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#326CE5]/0 to-[#326CE5]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#326CE5] transition-colors">Kubernetes</span>
+                                </div>
+                                <!-- GCP -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(66,133,244,0.3)] group-hover/icon:border-[#4285F4]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#4285F4]/0 to-[#4285F4]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg" alt="GCP" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#4285F4] transition-colors">GCP</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Wrapper 2: Second 50% -->
+                            <div class="flex gap-8 sm:gap-12 items-center px-4">
+                                <!-- Git -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(240,80,50,0.3)] group-hover/icon:border-[#F05032]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#F05032]/0 to-[#F05032]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#F05032] transition-colors">Git</span>
+                                </div>
+                                <!-- Docker -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(36,150,237,0.3)] group-hover/icon:border-[#2496ED]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#2496ED]/0 to-[#2496ED]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#2496ED] transition-colors">Docker</span>
+                                </div>
+                                <!-- PostgreSQL -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(51,103,145,0.3)] group-hover/icon:border-[#336791]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#336791]/0 to-[#336791]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#336791] transition-colors">PostgreSQL</span>
+                                </div>
+                                <!-- Django -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(9,46,32,0.3)] dark:group-hover/icon:shadow-[0_0_20px_rgba(68,183,139,0.3)] group-hover/icon:border-[#092e20]/50 dark:group-hover/icon:border-[#44b78b]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#092e20]/0 to-[#092e20]/10 dark:from-[#44b78b]/0 dark:to-[#44b78b]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" alt="Django" class="w-8 h-8 dark:hidden group-hover/icon:animate-pulse">
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg" alt="Django" class="w-8 h-8 hidden dark:block invert brightness-0 opacity-80 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#092e20] dark:group-hover/icon:text-[#44b78b] transition-colors">Django</span>
+                                </div>
+                                <!-- React -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(97,218,251,0.3)] group-hover/icon:border-[#61DAFB]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#61DAFB]/0 to-[#61DAFB]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#61DAFB] transition-colors">React</span>
+                                </div>
+                                <!-- HTML -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(227,79,38,0.3)] group-hover/icon:border-[#E34F26]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#E34F26]/0 to-[#E34F26]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#E34F26] transition-colors">HTML</span>
+                                </div>
+                                <!-- CSS -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(21,114,182,0.3)] group-hover/icon:border-[#1572B6]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#1572B6]/0 to-[#1572B6]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#1572B6] transition-colors">CSS</span>
+                                </div>
+                                <!-- JavaScript -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(247,223,30,0.3)] group-hover/icon:border-[#F7DF1E]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#F7DF1E]/0 to-[#F7DF1E]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#F7DF1E] transition-colors">JavaScript</span>
+                                </div>
+                                <!-- Python -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(55,118,171,0.3)] group-hover/icon:border-[#3776AB]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#3776AB]/0 to-[#3776AB]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#3776AB] transition-colors">Python</span>
+                                </div>
+                                <!-- MySQL -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(68,121,161,0.3)] group-hover/icon:border-[#4479A1]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#4479A1]/0 to-[#4479A1]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="MySQL" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#4479A1] transition-colors">MySQL</span>
+                                </div>
+                                <!-- Kubernetes -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(50,108,229,0.3)] group-hover/icon:border-[#326CE5]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#326CE5]/0 to-[#326CE5]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#326CE5] transition-colors">Kubernetes</span>
+                                </div>
+                                <!-- GCP -->
+                                <div class="group/icon flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-2 hover:scale-110 cursor-pointer">
+                                    <div class="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm transition-all duration-300 group-hover/icon:shadow-[0_0_20px_rgba(66,133,244,0.3)] group-hover/icon:border-[#4285F4]/50 overflow-hidden">
+                                         <div class="absolute inset-0 bg-gradient-to-tr from-[#4285F4]/0 to-[#4285F4]/10 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-300"></div>
+                                         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/googlecloud/googlecloud-original.svg" alt="GCP" class="w-8 h-8 group-hover/icon:animate-pulse">
+                                    </div>
+                                    <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 group-hover/icon:text-[#4285F4] transition-colors">GCP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bento-card spotlight-card col-span-1 bg-slate-900 text-white rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden hoverable reveal-on-scroll delay-100">
+                    <div class="spotlight-overlay"></div>
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary blur-3xl opacity-30 rounded-full"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mb-4 text-2xl animate-spin-slow">
+                            🌍
+                        </div>
+                        <h3 class="text-xl font-bold mb-1">Based in</h3>
+                        <p class="text-slate-400">Odisha,India</p>
+                    </div>
+                    <div class="relative z-10">
+                        <p class="text-xs text-slate-400 uppercase tracking-wider mb-1">Local Time</p>
+                        <p id="local-time" class="text-3xl font-display font-bold font-mono">00:00</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bento-card spotlight-card col-span-1 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-8 flex flex-col justify-center gap-6 hoverable reveal-on-scroll delay-200">
+                    <div class="spotlight-overlay"></div>
+                    <div class="relative z-10">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-xs font-bold uppercase tracking-wide">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Open for Projects
+                        </span>
+                    </div>
+                    <div class="flex gap-4 text-2xl text-slate-600 dark:text-slate-400 relative z-10">
+                        <a href="https://github.com/Athexdev" class="hover:text-primary transition-colors hover:scale-110 transform"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/debesh-nayak-247252369" class="hover:text-primary transition-colors hover:scale-110 transform"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://t.me/athexdev" class="hover:text-primary transition-colors hover:scale-110 transform"><i class="fab fa-telegram"></i></a>
+                        <a href="https://www.instagram.com/codewithdebeshh/" class="hover:text-primary transition-colors hover:scale-110 transform"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bento-card spotlight-card col-span-1 md:col-span-2 bg-gradient-to-br from-primary to-secondary text-white rounded-3xl p-8 flex flex-col justify-center relative overflow-hidden hoverable reveal-on-scroll delay-300">
+                    <div class="spotlight-overlay"></div>
+                    <i class="fas fa-quote-right absolute top-8 right-8 text-6xl text-white/10"></i>
+                    <h3 class="text-2xl md:text-3xl font-display font-bold leading-tight relative z-10 max-w-lg">
+                        "Design is not just what it looks like and feels like. Design is how it works."
+                    </h3>
+                    <p class="mt-4 text-white/80 text-sm font-mono relative z-10">— AthexDev</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section-spy py-24 relative z-10">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+                    Skills<span class="text-primary">.</span>
+                </h2>
+                <p class="text-slate-500 max-w-lg mx-auto">
+                    Technologies and tools I use to design, build, and deploy scalable software systems.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Backend Development -->
+                <div class="p-8 rounded-2xl bg-white dark:bg-surface border border-slate-200 dark:border-white/10 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 group hoverable reveal-on-scroll spotlight-card flex flex-col h-full">
+                    <div class="spotlight-overlay"></div>
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 text-2xl group-hover:bg-primary group-hover:text-white transition-colors relative z-10">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-3 relative z-10">Backend Development</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed relative z-10 mb-6 flex-grow">
+                        Building scalable backend systems and APIs using modern Python frameworks.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-auto relative z-10">
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">Python</span>
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">Django</span>
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">REST APIs</span>
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">PostgreSQL</span>
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">MySQL</span>
+                    </div>
+                </div>
+                
+                <!-- Web Development -->
+                <div class="p-8 rounded-2xl bg-white dark:bg-surface border border-slate-200 dark:border-white/10 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 group hoverable reveal-on-scroll delay-100 spotlight-card flex flex-col h-full">
+                    <div class="spotlight-overlay"></div>
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 text-2xl group-hover:bg-primary group-hover:text-white transition-colors relative z-10">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-3 relative z-10">Web Development</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed relative z-10 mb-6 flex-grow">
+                        Developing responsive and performant web applications and user interfaces.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-auto relative z-10">
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">HTML</span>
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">CSS</span>
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">JavaScript</span>
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">Bootstrap</span>
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">React</span>
+                    </div>
+                </div>
+
+                <!-- Cloud & DevOps -->
+                <div class="p-8 rounded-2xl bg-white dark:bg-surface border border-slate-200 dark:border-white/10 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 group hoverable reveal-on-scroll delay-200 spotlight-card flex flex-col h-full">
+                    <div class="spotlight-overlay"></div>
+                    <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 text-2xl group-hover:bg-primary group-hover:text-white transition-colors relative z-10">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-3 relative z-10">Cloud & DevOps</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed relative z-10 mb-6 flex-grow">
+                        Working with modern development workflows, version control, and containerized environments.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-auto relative z-10">
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">Docker</span>
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">Git</span>
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">Linux</span>
+                        <span class="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 transition-colors group-hover:border-primary/30">CI/CD basics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section-spy py-24 bg-slate-50 dark:bg-[#080808]">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-16 text-center reveal-on-scroll">
+                Experience<span class="text-primary">.</span>
+            </h2>
+
+            <div class="relative border-l border-slate-200 dark:border-white/10 ml-4 md:ml-10 space-y-12">
+                <!-- Item 1 -->
+                <div class="relative pl-8 md:pl-12 group reveal-on-scroll">
+                    <!-- Timeline Dot -->
+                    <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-primary transition-colors ring-4 ring-transparent group-hover:ring-primary/20"></span>
+                    
+                    <div class="flex flex-col mb-4 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all hover:border-primary/50 group-hover:-translate-y-1 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-primary blur-[80px] opacity-10 rounded-full group-hover:opacity-20 transition-opacity pointer-events-none"></div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-3 relative z-10">
+                            <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white group-hover:text-primary transition-colors flex items-center gap-2">
+                                <i class="fas fa-laptop-code text-primary/80"></i> Full Stack Development Intern
+                            </h3>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 w-fit whitespace-nowrap">Sep 2025 – Present</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm font-medium text-slate-700 dark:text-slate-300 mb-5 relative z-10">
+                            <span class="flex items-center gap-1"><i class="far fa-building opacity-70"></i> Odisha Computer Application Centre</span>
+                            <span class="hidden sm:inline text-slate-300 dark:text-slate-600">•</span>
+                            <span class="flex items-center gap-1 text-slate-500"><i class="fas fa-map-marker-alt text-slate-400"></i> Bhubaneswar, India</span>
+                        </div>
+                        <ul class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed space-y-2.5 max-w-3xl list-none relative z-10">
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1 text-[8px]"><i class="fas fa-circle"></i></span>
+                                <span>Developed backend features for government web applications using Django.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1 text-[8px]"><i class="fas fa-circle"></i></span>
+                                <span>Designed scalable relational database schemas using PostgreSQL.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1 text-[8px]"><i class="fas fa-circle"></i></span>
+                                <span>Built responsive UI components with HTML, CSS, and Bootstrap.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1 text-[8px]"><i class="fas fa-circle"></i></span>
+                                <span>Contributed to full-stack architecture and performance optimization for public sector digital systems.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="relative pl-8 md:pl-12 group reveal-on-scroll delay-100">
+                    <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-primary transition-colors ring-4 ring-transparent group-hover:ring-primary/20"></span>
+                    
+                    <div class="flex flex-col mb-4 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all hover:border-primary/50 group-hover:-translate-y-1 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-primary blur-[80px] opacity-10 rounded-full group-hover:opacity-20 transition-opacity pointer-events-none"></div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-3 relative z-10">
+                            <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white group-hover:text-primary transition-colors flex items-center gap-2">
+                                <i class="fas fa-network-wired text-primary/80"></i> Data Management & Networking Intern
+                            </h3>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300 w-fit whitespace-nowrap">May 2025 – Jul 2025</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm font-medium text-slate-700 dark:text-slate-300 mb-5 relative z-10">
+                            <span class="flex items-center gap-1"><i class="far fa-building opacity-70"></i> Birlanu Pvt. Ltd.</span>
+                            <span class="hidden sm:inline text-slate-300 dark:text-slate-600">•</span>
+                            <span class="flex items-center gap-1 text-slate-500"><i class="fas fa-map-marker-alt text-slate-400"></i> Balasore, India</span>
+                        </div>
+                        <ul class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed space-y-2.5 max-w-3xl list-none relative z-10">
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1 text-[8px]"><i class="fas fa-circle"></i></span>
+                                <span>Collaborated in a 4-member development team working on an employee management system.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1 text-[8px]"><i class="fas fa-circle"></i></span>
+                                <span>Developed backend modules for storing and processing employee records.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1 text-[8px]"><i class="fas fa-circle"></i></span>
+                                <span>Improved internal data workflows by reducing redundant files and optimizing data management processes.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1 text-[8px]"><i class="fas fa-circle"></i></span>
+                                <span>Assisted in maintaining structured relational databases.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="relative pl-8 md:pl-12 group reveal-on-scroll delay-200">
+                    <span class="absolute -left-[5px] top-2 w-2.5 h-2.5 rounded-full bg-slate-300 dark:bg-slate-700 group-hover:bg-primary transition-colors ring-4 ring-transparent group-hover:ring-primary/20"></span>
+                    
+                    <div class="flex flex-col mb-4 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all hover:border-primary/50 group-hover:-translate-y-1 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-primary blur-[80px] opacity-10 rounded-full group-hover:opacity-20 transition-opacity pointer-events-none"></div>
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-3 relative z-10">
+                            <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white group-hover:text-primary transition-colors flex items-center gap-2">
+                                <i class="fas fa-dna text-primary/80"></i> Segment Developer
+                            </h3>
+                            <span class="text-xs font-bold px-3 py-1 rounded-full bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300 w-fit whitespace-nowrap">2025</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm font-medium text-slate-700 dark:text-slate-300 mb-5 relative z-10">
+                            <span class="flex items-center gap-1"><i class="fas fa-project-diagram opacity-70"></i> DNA Identification System</span>
+                            <span class="hidden sm:inline text-slate-300 dark:text-slate-600">•</span>
+                            <span class="flex items-center gap-1 text-slate-500"><i class="fas fa-trophy text-slate-400"></i> Smart India Hackathon</span>
+                        </div>
+                        <ul class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed space-y-2.5 max-w-3xl list-none relative z-10">
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1 text-[8px]"><i class="fas fa-circle"></i></span>
+                                <span>Contributed to the development of a DNA-based identification prototype for forensic or identity verification scenarios.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1 text-[8px]"><i class="fas fa-circle"></i></span>
+                                <span>Designed and implemented key modules as a segment developer within a student innovation team.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1 text-[8px]"><i class="fas fa-circle"></i></span>
+                                <span>Participated in rapid ideation, development, and system integration during the hackathon cycle.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume" class="section-spy py-24 bg-white/30 dark:bg-white/5 border-y border-slate-200 dark:border-white/5 transition-colors relative z-10">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6 reveal-on-scroll">
+                <div>
+                   <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-4">
+                       Resume<span class="text-primary">.</span>
+                   </h2>
+                   <p class="text-slate-500 max-w-md">
+                       A visual overview of my professional career, education, and technical expertise.
+                   </p>
+                </div>
+                <a href="images/debesh_cv.jpg" target="_blank" class="px-6 py-3 bg-primary/10 text-primary border border-primary/20 hover:bg-primary hover:text-white rounded-xl font-bold text-sm transition-all hover:scale-105 hoverable">
+                    <i class="fas fa-external-link-alt mr-2"></i> Full View
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                <!-- CV Image Display -->
+                <div class="lg:col-span-7 reveal-on-scroll">
+                    <div class="group relative spotlight-card cv-image-hover bg-white dark:bg-surface p-2 rounded-3xl border border-slate-200 dark:border-white/10 shadow-2xl overflow-hidden cursor-zoom-in transition-all duration-500" onclick="window.open('images/debesh_cv.jpg', '_blank')">
+                        <div class="spotlight-overlay"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-center justify-center">
+                            <span class="px-6 py-3 bg-white/90 dark:bg-black/80 backdrop-blur-md rounded-full text-black dark:text-white font-bold text-sm shadow-xl">
+                                <i class="fas fa-search-plus mr-2"></i> Click to Enlarge
+                            </span>
+                        </div>
+                        <img src="images/debesh_cv.jpg" alt="Debesh Nayak CV" class="w-full h-auto rounded-2xl block shadow-inner" loading="lazy" onerror="this.src='https://via.placeholder.com/800x1100/0f172a/6366f1?text=Digital+CV+Preview'">
+                    </div>
+                </div>
+
+                <!-- Structured Overlay / Minimal Text Summary -->
+                <div class="lg:col-span-5 space-y-8 reveal-on-scroll delay-200">
+                    <div class="p-8 rounded-3xl bg-white/50 dark:bg-white/5 border border-slate-200 dark:border-white/10 backdrop-blur-md">
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+                            <i class="fas fa-user-graduate text-primary"></i> Profile Summary
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6">
+                            Full-stack developer with a passion for building scalable web applications and elegant user experiences. Specialized in Django, React, and cloud architectures with a focus on clean code and performance.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-3">Core Skills</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-white dark:bg-surface border border-slate-100 dark:border-white/10 rounded-lg text-xs font-semibold">Python</span>
+                                    <span class="px-3 py-1 bg-white dark:bg-surface border border-slate-100 dark:border-white/10 rounded-lg text-xs font-semibold">Django</span>
+                                    <span class="px-3 py-1 bg-white dark:bg-surface border border-slate-100 dark:border-white/10 rounded-lg text-xs font-semibold">React</span>
+                                    <span class="px-3 py-1 bg-white dark:bg-surface border border-slate-100 dark:border-white/10 rounded-lg text-xs font-semibold">GCP</span>
+                                    <span class="px-3 py-1 bg-white dark:bg-surface border border-slate-100 dark:border-white/10 rounded-lg text-xs font-semibold">Docker</span>
+                                    <span class="px-3 py-1 bg-white dark:bg-surface border border-slate-100 dark:border-white/10 rounded-lg text-xs font-semibold">PostgreSQL</span>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-3">Key Projects</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-primary/50"></div>
+                                        <span>Bring Your Own Cloud - Cloud Management Platform</span>
+                                    </li>
+                                    <li class="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-primary/50"></div>
+                                        <span>Deep Packet Inspection - Network Security</span>
+                                    </li>
+                                    <li class="flex items-center gap-3 text-sm text-slate-700 dark:text-slate-300">
+                                        <div class="w-1.5 h-1.5 rounded-full bg-primary/50"></div>
+                                        <span>Dev Mart - E-commerce Platform</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <a href="images/debesh_cv.jpg" download class="mt-8 w-full flex items-center justify-center gap-2 px-6 py-4 bg-slate-900 dark:bg-white text-white dark:text-black rounded-2xl font-bold hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10">
+                            <i class="fas fa-download"></i>
+                            Download CV (PDF/IMG)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selected Work -->
+    <section id="work" class="section-spy py-24 relative z-10">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 reveal-on-scroll">
+                <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-900 dark:text-white">
+                    Projects<br>Selected<span class="text-primary">.</span>
+                </h2>
+                <p class="text-slate-500 text-sm md:text-base max-w-xs text-left md:text-right">
+                   A combination of business strategy, aesthetic design, and clean code.
+                </p>
+            </div>
+
+            <!-- Project Filters -->
+            <div class="flex flex-wrap gap-4 mb-16 reveal-on-scroll delay-100" id="portfolio-filters">
+                <button class="filter-btn active px-5 py-2 rounded-full border border-slate-200 dark:border-white/10 text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary transition-all hoverable magnetic-btn" data-filter="all">All</button>
+                <button class="filter-btn px-5 py-2 rounded-full border border-slate-200 dark:border-white/10 text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary transition-all hoverable magnetic-btn" data-filter="platforms">Platforms</button>
+                <button class="filter-btn px-5 py-2 rounded-full border border-slate-200 dark:border-white/10 text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary transition-all hoverable magnetic-btn" data-filter="webapps">Web Applications</button>
+                <button class="filter-btn px-5 py-2 rounded-full border border-slate-200 dark:border-white/10 text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary transition-all hoverable magnetic-btn" data-filter="creativetech">Creative Tech</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 md:gap-y-32" id="projects-grid">
+                
+                <!-- Project 1: AthexPix (Featured) -->
+                <article class="project-item spotlight-card group cursor-pointer project-trigger hoverable reveal-on-scroll"
+                         data-filter-category="creativetech"
+                         data-title="AthexPix" 
+                         data-category="Creative Tech"
+                         data-image="images/athexpix.png" 
+                         data-desc="Wallpaper discovery web platform."
+                         data-link="https://athexpix.netlify.app/"
+                         data-source="https://github.com/Athexdev/Athex-pix"
+                         data-technologies="HTML, CSS, JavaScript">
+                    <div class="spotlight-overlay"></div>
+                    <div class="project-card relative w-full aspect-[4/3] bg-slate-200 dark:bg-surface rounded-2xl overflow-hidden mb-6 preserve-3d transition-transform duration-300 shadow-lg group-hover:shadow-xl border border-primary/20 dark:border-primary/30 ring-1 ring-primary/10">
+                        <div class="absolute top-4 left-4 z-20">
+                            <span class="px-3 py-1 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg shadow-primary/20">Featured</span>
+                        </div>
+                        <div class="absolute inset-0 overflow-hidden transform-gpu">
+                             <img src="images/athexpix.png" 
+                                  loading="lazy"
+                                  width="1200" height="900"
+                                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 parallax-img" alt="AthexPix">
+                             <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
+                        <div class="pr-4">
+                            <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">AthexPix</h3>
+                            <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Creative Tech</p>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">Wallpaper discovery web platform.</p>
+                        </div>
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all flex-shrink-0">
+                            <i class="fas fa-plus group-hover:rotate-90 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+
+                <!-- Project 2: Athex OS -->
+                <article class="project-item spotlight-card group cursor-pointer md:mt-24 project-trigger hoverable reveal-on-scroll delay-100" 
+                         data-filter-category="platforms"
+                         data-title="Athex OS" 
+                         data-category="Platforms"
+                         data-image="images/Athexos.png" 
+                         data-desc="Interactive browser-based operating system with window management."
+                         data-link="https://athexos.netlify.app"
+                         data-source="https://github.com/Athexdev/AthexOS"
+                         data-technologies="React, Node, PostgreSQL,Three.js">
+                    <div class="spotlight-overlay"></div>
+                    <div class="project-card relative w-full aspect-[4/3] bg-slate-200 dark:bg-surface rounded-2xl overflow-hidden mb-6 preserve-3d transition-transform duration-300 shadow-lg group-hover:shadow-xl border border-slate-200 dark:border-white/5">
+                        <div class="absolute inset-0 overflow-hidden transform-gpu">
+                             <img src="images/Athexos.png" 
+                                  loading="lazy"
+                                  width="1200" height="900"
+                                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 parallax-img" alt="Athex OS">
+                             <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
+                        <div class="pr-4">
+                            <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Athex OS</h3>
+                            <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Platforms</p>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">Web-based operating system interface.</p>
+                        </div>
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all flex-shrink-0">
+                            <i class="fas fa-plus group-hover:rotate-90 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+
+                <!-- Project 3: Athex Labs -->
+                <article class="project-item spotlight-card group cursor-pointer project-trigger hoverable reveal-on-scroll"
+                         data-filter-category="platforms"
+                         data-title="Athex Labs" 
+                         data-category="Platforms"
+                         data-image="images/byoc.png"
+                         data-desc="BYOC developer experimentation platform."
+                         data-link=""
+                         data-source="https://github.com/Athexdev/AthexLabs"
+                         data-technologies="Django, Python,React,PostgreSQL">
+                    <div class="spotlight-overlay"></div>
+                    <div class="project-card relative w-full aspect-[4/3] bg-slate-200 dark:bg-surface rounded-2xl overflow-hidden mb-6 preserve-3d transition-transform duration-300 shadow-lg group-hover:shadow-xl border border-slate-200 dark:border-white/5">
+                        <div class="absolute inset-0 overflow-hidden transform-gpu">
+                             <img src="images/byoc.png" 
+                                  loading="lazy"
+                                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 parallax-img" alt="Athex Labs">
+                             <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
+                        <div class="pr-4">
+                            <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Athex Labs</h3>
+                            <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Platforms</p>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">BYOC developer experimentation platform.</p>
+                        </div>
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all flex-shrink-0">
+                            <i class="fas fa-plus group-hover:rotate-90 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+
+                <!-- Project 4: PocketPulse -->
+                <article class="project-item spotlight-card group cursor-pointer md:mt-24 project-trigger hoverable reveal-on-scroll delay-100"
+                         data-filter-category="webapps"
+                         data-title="PocketPulse" 
+                         data-category="Web Applications"
+                         data-image="images/pocket.png"
+                         data-desc="Expense tracking web application."
+                         data-link=""
+                         data-source="https://github.com/Athexdev/pulse-xpense"
+                         data-technologies="Django, Python, PostgreSQL, Bootstrap">
+                    <div class="spotlight-overlay"></div>
+                    <div class="project-card relative w-full aspect-[4/3] bg-slate-200 dark:bg-surface rounded-2xl overflow-hidden mb-6 preserve-3d transition-transform duration-300 shadow-lg group-hover:shadow-xl border border-slate-200 dark:border-white/5">
+                        <div class="absolute inset-0 overflow-hidden transform-gpu">
+                             <img src="images/pocket.png" 
+                                  loading="lazy"
+                                  width="1200" height="900"
+                                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 parallax-img" alt="PocketPulse">
+                             <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
+                        <div class="pr-4">
+                            <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">PocketPulse</h3>
+                            <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Web Applications</p>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">Expense tracking web application.</p>
+                        </div>
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all flex-shrink-0">
+                            <i class="fas fa-plus group-hover:rotate-90 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+
+                <!-- Project 5: DevMart -->
+                <article class="project-item spotlight-card group cursor-pointer project-trigger hoverable reveal-on-scroll"
+                         data-filter-category="webapps"
+                         data-title="DevMart" 
+                         data-category="Web Applications"
+                         data-image="images/devmart.png" 
+                         data-desc="E-commerce platform."
+                         data-link=""
+                         data-source="https://github.com/Athexdev/DEV-MART"
+                         data-technologies="Django, Python, HTML, CSS">
+                    <div class="spotlight-overlay"></div>
+                    <div class="project-card relative w-full aspect-[4/3] bg-slate-200 dark:bg-surface rounded-2xl overflow-hidden mb-6 preserve-3d transition-transform duration-300 shadow-lg group-hover:shadow-xl border border-slate-200 dark:border-white/5">
+                        <div class="absolute inset-0 overflow-hidden transform-gpu">
+                             <img src="images/devmart.png" 
+                                  loading="lazy"
+                                  width="1200" height="900"
+                                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 parallax-img" alt="DevMart">
+                             <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
+                        <div class="pr-4">
+                            <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">DevMart</h3>
+                            <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Web Applications</p>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">E-commerce platform.</p>
+                        </div>
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all flex-shrink-0">
+                            <i class="fas fa-plus group-hover:rotate-90 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+
+                <!-- Project 6: Athex AeroInk -->
+                <article class="project-item spotlight-card group cursor-pointer md:mt-24 project-trigger hoverable reveal-on-scroll delay-100"
+                         data-filter-category="creativetech"
+                         data-title="Athex AeroInk" 
+                         data-category="Creative Tech"
+                         data-image="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2070&auto=format&fit=crop" 
+                         data-desc="Machine learning air-drawing system using OpenCV and MediaPipe."
+                         data-link=""
+                         data-source="https://github.com/Athexdev/Athex-Air-Draw"
+                         data-technologies="Python, OpenCV, MediaPipe">
+                    <div class="spotlight-overlay"></div>
+                    <div class="project-card relative w-full aspect-[4/3] bg-slate-200 dark:bg-surface rounded-2xl overflow-hidden mb-6 preserve-3d transition-transform duration-300 shadow-lg group-hover:shadow-xl border border-slate-200 dark:border-white/5">
+                        <div class="absolute inset-0 overflow-hidden transform-gpu">
+                             <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?q=80&w=2070&auto=format&fit=crop" 
+                                  loading="lazy"
+                                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 parallax-img" alt="Athex AeroInk">
+                             <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start border-b border-slate-200 dark:border-white/10 pb-4 relative z-10">
+                        <div class="pr-4">
+                            <h3 class="text-2xl font-display font-bold text-slate-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Athex AeroInk</h3>
+                            <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Creative Tech</p>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2">Machine learning air-drawing system using OpenCV and MediaPipe.</p>
+                        </div>
+                        <span class="w-8 h-8 flex items-center justify-center rounded-full border border-slate-200 dark:border-slate-700 group-hover:bg-slate-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-all flex-shrink-0">
+                            <i class="fas fa-plus group-hover:rotate-90 transition-transform"></i>
+                        </span>
+                    </div>
+                </article>
+
+            </div>
+            
+            <div class="text-center mt-24">
+                <a href="#" class="inline-block px-8 py-3 rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-all text-sm font-semibold tracking-wide hoverable magnetic-btn focus:outline-none">
+                    VIEW ALL ARCHIVES
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Dashboard Section -->
+    <section id="github" class="section-spy py-24 relative z-10 bg-white/50 dark:bg-white/5 border-y border-slate-200 dark:border-white/5 backdrop-blur-sm">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="text-center mb-16 reveal-on-scroll">
+                 <h2 class="font-display text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+                    My GitHub Activity & Contributions<span class="text-primary">.</span>
+                </h2>
+                <p class="text-slate-500 max-w-lg mx-auto">
+                    A visual overview of my open-source contributions and coding activity on GitHub.
+                </p>
+            </div>
+
+            <!-- Animated Counters -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 relative z-10" id="github-counters">
+                <div class="bg-slate-100 dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-6 spotlight-card hoverable text-center reveal-on-scroll">
+                    <div class="spotlight-overlay"></div>
+                    <div class="text-primary text-3xl md:text-4xl mb-3 relative z-10"><i class="fas fa-book-open"></i></div>
+                    <div class="text-4xl md:text-5xl font-display font-bold text-slate-900 dark:text-white mb-2 relative z-10 github-counter drop-shadow-[0_0_15px_rgba(37,99,235,0.3)]" data-target="0" id="repo-count">0</div>
+                    <p class="text-slate-500 text-xs md:text-sm uppercase tracking-wider font-bold relative z-10">Repositories</p>
+                </div>
+                <div class="bg-slate-100 dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-6 spotlight-card hoverable text-center reveal-on-scroll delay-100">
+                    <div class="spotlight-overlay"></div>
+                    <div class="text-yellow-500 text-3xl md:text-4xl mb-3 relative z-10"><i class="fas fa-star"></i></div>
+                    <div class="text-4xl md:text-5xl font-display font-bold text-slate-900 dark:text-white mb-2 relative z-10 github-counter drop-shadow-[0_0_15px_rgba(37,99,235,0.3)]" data-target="0" id="stars-count">0</div>
+                    <p class="text-slate-500 text-xs md:text-sm uppercase tracking-wider font-bold relative z-10">Total Stars</p>
+                </div>
+                <div class="bg-slate-100 dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-6 spotlight-card hoverable text-center reveal-on-scroll delay-200">
+                    <div class="spotlight-overlay"></div>
+                    <div class="text-primary text-3xl md:text-4xl mb-3 relative z-10"><i class="fas fa-users"></i></div>
+                    <div class="text-4xl md:text-5xl font-display font-bold text-slate-900 dark:text-white mb-2 relative z-10 github-counter drop-shadow-[0_0_15px_rgba(37,99,235,0.3)]" data-target="0" id="followers-count">0</div>
+                    <p class="text-slate-500 text-xs md:text-sm uppercase tracking-wider font-bold relative z-10">Followers</p>
+                </div>
+                <div class="bg-slate-100 dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-6 spotlight-card hoverable text-center reveal-on-scroll delay-300">
+                    <div class="spotlight-overlay"></div>
+                    <div class="text-yellow-500 text-3xl md:text-4xl mb-3 relative z-10"><i class="fas fa-trophy"></i></div>
+                    <div class="text-4xl md:text-5xl font-display font-bold text-slate-900 dark:text-white mb-2 relative z-10 github-counter drop-shadow-[0_0_15px_rgba(37,99,235,0.3)]" data-target="6" id="achievements-count">0</div>
+                    <p class="text-slate-500 text-xs md:text-sm uppercase tracking-wider font-bold relative z-10">Achievements</p>
+                </div>
+            </div>
+
+            <!-- Contribution Graph -->
+            <div class="w-full mb-16 reveal-on-scroll delay-100 relative z-10">
+                <div class="bg-slate-100 dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-6 spotlight-card hoverable overflow-hidden">
+                    <div class="spotlight-overlay"></div>
+                    <img src="https://github-readme-activity-graph.vercel.app/graph?username=Athexdev&theme=tokyo-night&hide_border=true&bg_color=transparent" 
+                         alt="GitHub Contribution Graph" 
+                         class="w-full h-auto rounded-xl relative z-10" loading="lazy">
+                </div>
+            </div>
+
+            <!-- GitHub Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 relative z-10">
+                <div class="bg-slate-100 dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-6 spotlight-card hoverable flex justify-center items-center reveal-on-scroll delay-100">
+                    <div class="spotlight-overlay"></div>
+                    <img src="https://github-readme-stats.vercel.app/api?username=Athexdev&show_icons=true&theme=tokyonight&hide_bg=true&hide_border=true" alt="GitHub Stats" class="w-full relative z-10" loading="lazy">
+                </div>
+                <div class="bg-slate-100 dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-6 spotlight-card hoverable flex justify-center items-center reveal-on-scroll delay-200">
+                    <div class="spotlight-overlay"></div>
+                    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Athexdev&layout=compact&theme=tokyonight&hide_bg=true&hide_border=true" alt="Top Languages" class="w-full relative z-10" loading="lazy">
+                </div>
+                <div class="bg-slate-100 dark:bg-surface border border-slate-200 dark:border-white/10 rounded-3xl p-6 spotlight-card hoverable flex justify-center items-center md:col-span-2 lg:col-span-1 reveal-on-scroll delay-300">
+                    <div class="spotlight-overlay"></div>
+                    <img src="https://github-readme-streak-stats.herokuapp.com/?user=Athexdev&theme=tokyonight&hide_border=true&background=transparent" alt="GitHub Streak" class="w-full relative z-10" loading="lazy">
+                </div>
+            </div>
+
+            <!-- Live Repositories -->
+            <div class="relative z-10">
+                <div class="flex justify-between items-end mb-8 reveal-on-scroll">
+                    <h3 class="font-display text-2xl font-bold text-slate-900 dark:text-white">Live Repositories</h3>
+                    <a href="https://github.com/Athexdev?tab=repositories" target="_blank" class="text-slate-500 text-sm font-bold hover:text-primary transition-colors hoverable magnetic-btn">SEE ALL →</a>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="github-repos">
+                    <!-- Cards will be injected by script.js -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="writing" class="section-spy py-24 bg-slate-50 dark:bg-[#080808]">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 reveal-on-scroll">
+                <h2 class="font-display text-4xl font-bold text-slate-900 dark:text-white">
+                    Currently<br>Focussing<span class="text-primary">.</span>
+                </h2>
+                <a href="#" class="text-slate-500 text-sm font-bold hover:text-primary transition-colors hoverable magnetic-btn">VIEW ALL ARTICLES →</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Article 1 -->
+                <a href="#" class="group block hoverable reveal-on-scroll">
+                    <div class="h-64 rounded-2xl overflow-hidden mb-6 relative">
+                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80" alt="Blog 1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+
+                    </div>
+                    <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Backend / System Design</p>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Building a Deep Packet Inspection System using Django</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed line-clamp-3">Designing and implementing a DPI system with packet analysis, request filtering, and scalable backend architecture using Django and Python.</p>
+                </a>
+
+                <!-- Article 2 -->
+                <a href="#" class="group block hoverable reveal-on-scroll delay-100">
+                    <div class="h-64 rounded-2xl overflow-hidden mb-6 relative">
+                        <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=800&q=80" alt="Blog 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                    </div>
+                    <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">DSA / Problem Solving</p>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Bit Manipulation Patterns Every Developer Should Master</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed line-clamp-3">Breaking down complex bitwise problems into simple patterns with real examples from competitive programming and LeetCode.</p>
+                </a>
+
+                <!-- Article 3 -->
+                <a href="#" class="group block hoverable reveal-on-scroll delay-200">
+                    <div class="h-64 rounded-2xl overflow-hidden mb-6 relative">
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="Blog 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                    </div>
+                    <p class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Web Development</p>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-primary transition-colors">Creating Various Web-Based Applications Using Django</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed line-clamp-3">Building scalable and dynamic web applications using Django, focusing on backend logic, database integration, and clean architecture for real-world projects.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="testimonials" class="section-spy py-24 relative overflow-hidden">
+        <div class="container mx-auto px-6 max-w-6xl relative z-10">
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-16 text-center reveal-on-scroll">
+                Testimonials<span class="text-primary">.</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-slate-50 dark:bg-surface border border-slate-200 dark:border-white/10 p-8 rounded-2xl relative reveal-on-scroll">
+                    <div class="text-primary text-4xl absolute top-6 right-8 opacity-20"><i class="fas fa-quote-right"></i></div>
+                    <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed mb-6 italic">
+                        “Debesh is a highly detail-oriented developer. He doesn’t just write code—he also thinks about 
+                        the business side and user experience. The final result far exceeded our expectations.”
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-300 rounded-full overflow-hidden border-2 border-primary/20">
+                            <img src="https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?fm=jpg&q=60&w=200&fit=crop" loading="lazy" width="200" height="200" class="w-full h-full object-cover" alt="Aarav Mehta">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Aarav Mehta</h4>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">CTO, Digital Solutions India</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 dark:bg-surface border border-slate-200 dark:border-white/10 p-8 rounded-2xl relative reveal-on-scroll delay-100">
+                    <div class="text-primary text-4xl absolute top-6 right-8 opacity-20"><i class="fas fa-quote-right"></i></div>
+                    <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed mb-6 italic">
+                        “Working with Debesh was a pleasure. His technical expertise in full-stack development is 
+                        top-notch, and he has a great understanding of system architecture. Our platform's performance 
+                        and scalability increased significantly after his optimization.”
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-slate-300 rounded-full overflow-hidden border-2 border-primary/20">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?fm=jpg&q=60&w=200&fit=crop" loading="lazy" width="200" height="200" class="w-full h-full object-cover" alt="Ishita Iyer">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Ishita Iyer</h4>
+                            <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Founder, Creative Hub</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="contact" class="section-spy py-24 md:py-32 relative overflow-hidden bg-slate-100 dark:bg-[#080808]">
+        <div class="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 max-w-5xl">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="text-center lg:text-left">
+                    <h2 class="font-display text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6 tracking-tighter leading-tight reveal-on-scroll">
+                        Let’s build something amazing.<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Legendary.</span>
+                    </h2>
+                    <p class="text-slate-500 mb-8 text-lg reveal-on-scroll delay-100">
+                        Whether you have a project in mind or just want to say hello, my inbox is always open.
+                    </p>
+                    <div class="space-y-4 text-left hidden lg:block reveal-on-scroll delay-200">
+                        <div class="flex items-center gap-4 text-slate-600 dark:text-slate-400">
+                            <i class="fas fa-envelope text-primary w-6"></i>
+                            <span>nayakdebesh925@gmail.com</span>
+                        </div>
+                        <div class="flex items-center gap-4 text-slate-600 dark:text-slate-400">
+                            <i class="fas fa-map-marker-alt text-primary w-6"></i>
+                            <span>Odisha, India</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="bg-white dark:bg-surface p-8 rounded-3xl shadow-xl border border-slate-200 dark:border-white/10 reveal-on-scroll delay-300">
+                    <form class="space-y-6" id="contact-form">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Name</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all dark:text-white hoverable magnetic-btn" placeholder="Your Name" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all dark:text-white hoverable magnetic-btn" placeholder="email@example.com" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all dark:text-white hoverable magnetic-btn" placeholder="Tell me about your project..." required></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-slate-900 dark:bg-white text-white dark:text-black rounded-xl font-bold text-lg hover:scale-[1.02] transition-transform shadow-lg hoverable magnetic-btn focus:outline-none">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <footer class="mt-24 pt-8 border-t border-slate-200 dark:border-white/10 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500 reveal-on-scroll">
+                <div class="flex gap-6 mb-4 md:mb-0">
+                    <a href="https://www.linkedin.com/in/debesh-nayak-247252369" class="hover:text-primary transition-colors hoverable focus:outline-none magnetic-btn">LinkedIn</a>
+                    <a href="https://www.instagram.com/codewithdebeshh" class="hover:text-primary transition-colors hoverable focus:outline-none magnetic-btn">Instagram</a>
+                    <a href="https://github.com/Athexdev" class="hover:text-primary transition-colors hoverable focus:outline-none magnetic-btn">GitHub</a>
+                </div>
+                <div>© <span id="year">2025</span> AthexDev. All rights reserved.</div>
+            </footer>
+        </div>
+    </section>
+
+    <div id="project-modal" class="fixed inset-0 z-[100] hidden">
+
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity opacity-0" id="modal-backdrop"></div>
+        
+        <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+            <div class="bg-white dark:bg-[#111] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto border border-slate-200 dark:border-white/10" id="modal-content">
+                <div class="relative">
+
+                    <button id="close-modal" aria-label="Close Modal" class="absolute top-4 right-4 w-10 h-10 bg-white/50 dark:bg-black/50 backdrop-blur rounded-full flex items-center justify-center text-slate-900 dark:text-white hover:bg-red-500 hover:text-white transition-colors z-10 hoverable focus:outline-none">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <div class="h-64 md:h-96 w-full overflow-hidden">
+                        <img id="modal-image" src="" class="w-full h-full object-cover" alt="Project Detail">
+                    </div>
+
+                    <div class="p-8 md:p-12">
+                        <div class="flex flex-col md:flex-row justify-between items-start gap-4 mb-6">
+                            <div>
+                                <span id="modal-category" class="text-primary font-bold text-sm tracking-widest uppercase mb-2 block">Category</span>
+                                <h2 id="modal-title" class="text-3xl md:text-5xl font-display font-bold text-slate-900 dark:text-white">Project Title</h2>
+                            </div>
+                            <div class="flex flex-wrap gap-3">
+                                <a href="#" id="modal-link" target="_blank" rel="noopener noreferrer" class="px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-black rounded-full font-bold text-sm hover:scale-105 transition-transform whitespace-nowrap hoverable focus:outline-none">
+                                    Live Demo <i class="fas fa-external-link-alt ml-2"></i>
+                                </a>
+                                <a href="#" id="modal-source" target="_blank" rel="noopener noreferrer" class="px-6 py-3 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white rounded-full font-bold text-sm hover:scale-105 transition-transform whitespace-nowrap hoverable focus:outline-none">
+                                    Source Code <i class="fab fa-github ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                            <div class="md:col-span-2">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">About the Project</h3>
+                                <p id="modal-desc" class="text-slate-600 dark:text-slate-300 leading-relaxed text-lg">
+                                    Description is here.
+                                </p>
+                            </div>
+                            <div class="space-y-6" id="modal-tech-section">
+                                <div>
+                                    <h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2">Technology</h4>
+                                    <div class="flex flex-wrap gap-2" id="modal-technologies">
+                                        <!-- Tech badges will be injected here -->
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-2">Year</h4>
+                                    <p class="text-slate-600 dark:text-slate-400">2026</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="https://t.me/Athexdev" target="_blank" aria-label="Chat on Telegram" class="fixed bottom-8 right-8 z-[60] w-14 h-14 bg-[#0088cc] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300 hoverable magnetic-btn group">
+        <span class="absolute inline-flex h-full w-full rounded-full bg-[#0088cc] opacity-30 animate-ping"></span>
+        <i class="fab fa-telegram text-3xl leading-none z-10 group-hover:rotate-12 transition-transform"></i>
+    </a>
+
+    <button id="scrollToTopBtn" aria-label="Scroll to Top" class="fixed bottom-28 right-8 z-50 w-12 h-12 bg-white dark:bg-surface border border-slate-200 dark:border-white/20 rounded-full flex items-center justify-center text-slate-600 dark:text-white shadow-lg translate-y-20 opacity-0 transition-all duration-300 hover:border-primary hover:text-primary hover:-translate-y-1 hoverable focus:outline-none">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+
+    <!-- Floating CV Button -->
+    <a href="#resume" id="floating-cv-btn" class="fixed bottom-44 right-8 z-[45] w-12 h-12 bg-white dark:bg-surface border border-slate-200 dark:border-white/10 rounded-full flex items-center justify-center shadow-2xl shadow-primary/20 hover:scale-110 hover:border-primary transition-all duration-300 group hoverable opacity-0 translate-y-20 pointer-events-none">
+        <i class="far fa-file-alt text-slate-600 dark:text-slate-400 group-hover:text-primary transition-colors text-lg"></i>
+        <span class="absolute right-full mr-4 px-3 py-1.5 bg-slate-900 dark:bg-white text-white dark:text-black text-[10px] font-bold uppercase tracking-widest rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl border border-slate-200 dark:border-white/10">View CV</span>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
